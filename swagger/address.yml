@@ -1,0 +1,81 @@
+swagger: "2.0"
+info:
+  description: "Address Service API"
+  version: "1.0.0"
+  title: "Address Service"
+  contact:
+    email: "fabioccunha@gmail.com"
+basePath: "/api"
+schemes:
+  - "http"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+paths:
+  /addresses/{zipcode}:
+    get:
+      tags:
+        - "address"
+      summary: "Find an address by zipcode"
+      description: "Returns an address"
+      operationId: "getAddress"
+      parameters:
+        - name: "zipcode"
+          in: "path"
+          description: "Zipcode of address"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/AddressResponse"
+        400:
+          description: "Invalid zipcode"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        404:
+          description: "Address not found"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: "Internal error"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+definitions:
+  AddressResponse:
+    type: "object"
+    properties:
+      address:
+        type: "string"
+        example: "Av. Paulista"
+      county:
+        type: "string"
+        example: "Jardins"
+      city:
+        type: "string"
+        example: "São Paulo"
+      state:
+        type: "string"
+        example: "SP"
+      zipcode:
+        type: "string"
+        example: "01111000"
+
+  ErrorResponse:
+    required:
+      - errors
+    properties:
+      errors:
+        type: array
+        items:
+          type: object
+          properties:
+            code:
+              type: "integer"
+              format: "int64"
+            message:
+              type: "string"
+              example: "Error message"

@@ -1,0 +1,36 @@
+spring:
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: false
+    default-property-inclusion: non_null
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+        errorDecoder: com.customer.service.config.DefaultErrorDecoder
+  compression:
+    response:
+      enabled: true
+  okhttp:
+    enabled: true
+
+integration:
+  address:
+    uri: https://viacep.com.br/ws
+  state:
+    uri: https://servicodados.ibge.gov.br/api/v1
