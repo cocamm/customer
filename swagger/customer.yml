@@ -1,0 +1,215 @@
+swagger: "2.0"
+info:
+  description: "Customer Service API"
+  version: "1.0.0"
+  title: "Customer Service"
+  contact:
+    email: "fabioccunha@gmail.com"
+basePath: "/api"
+schemes:
+  - "http"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+paths:
+  /customers/{document}:
+    get:
+      tags:
+        - "customer"
+      summary: "Find a customer by document"
+      description: "Returns a customer"
+      operationId: "getCustomer"
+      parameters:
+        - name: "document"
+          in: "path"
+          description: "Document of customer to return"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/CustomerResponse"
+        400:
+          description: "Invalid document"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        404:
+          description: "Customer not found"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: "Internal error"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /customers/{document}/addresses:
+    get:
+      tags:
+        - "customer address"
+      summary: "List all address of a customer"
+      description: "Returns all address of a customer"
+      operationId: "getCustomerAddresses"
+      parameters:
+        - name: "document"
+          in: "path"
+          description: "Document of customer to return"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/AddressResponse"
+        400:
+          description: "Invalid document"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        404:
+          description: "Customer not found"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: "Internal error"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /customers/{document}/addresses/{addressId}:
+    put:
+      tags:
+        - "customer address"
+      summary: "Update address of a customer"
+      description: ""
+      operationId: "updateCustomerAddress"
+      parameters:
+        - name: "document"
+          in: "path"
+          description: "Document of customer to update"
+          required: true
+          type: "string"
+        - name: "addressId"
+          in: "path"
+          description: "Id of address to update"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Address object to be updated"
+          required: true
+          schema:
+            $ref: "#/definitions/AddressRequest"
+      responses:
+        204:
+          description: "Successful operation"
+        400:
+          description: "Invalid address"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        404:
+          description: "Customer not found"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: "Internal error"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+definitions:
+  CustomerResponse:
+    type: "object"
+    required:
+      - "id"
+      - "name"
+      - "document"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        example: "Full Name"
+      document:
+        type: "string"
+        example: "12345678909"
+      birthDate:
+        type: "string"
+        format: "date"
+        example: "2019-01-01"
+      address:
+        type: "array"
+        items:
+          $ref: "#/definitions/AddressResponse"
+  AddressResponse:
+    type: "object"
+    properties:
+      addressId:
+        type: "integer"
+        format: "int64"
+      street:
+        type: "string"
+        example: "Av. Paulista"
+      number:
+        type: "integer"
+        format: "int64"
+      complement:
+        type: "string"
+      county:
+        type: "string"
+        example: "Jardins"
+      city:
+        type: "string"
+        example: "São Paulo"
+      state:
+        type: "string"
+        example: "SP"
+      zipcode:
+        type: "string"
+        example: "01111000"
+
+  AddressRequest:
+    type: "object"
+    required:
+      - "address"
+      - "number"
+      - "county"
+      - "city"
+      - "state"
+      - "zipcode"
+    properties:
+      street:
+        type: "string"
+        example: "Av. Paulista"
+      number:
+        type: "integer"
+        format: "int64"
+      complement:
+        type: "string"
+      county:
+        type: "string"
+        example: "Jardins"
+      city:
+        type: "string"
+        example: "São Paulo"
+      state:
+        type: "string"
+        example: "SP"
+      zipcode:
+        type: "string"
+        example: "01111000"
+
+  ErrorResponse:
+    required:
+      - errors
+    properties:
+      errors:
+        type: array
+        items:
+          type: object
+          properties:
+            code:
+              type: "integer"
+              format: "int64"
+            message:
+              type: "string"
+              example: "Error message"

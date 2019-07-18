@@ -1,0 +1,236 @@
+{
+	"info": {
+		"_postman_id": "25d18cc3-0667-4a16-8f49-86fd1f1f1fa6",
+		"name": "PAN",
+		"description": "Customer Service API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "customers",
+			"item": [
+				{
+					"name": "Find a customer by document",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{apiUri}}/customers/:document",
+							"host": [
+								"{{apiUri}}"
+							],
+							"path": [
+								"customers",
+								":document"
+							],
+							"variable": [
+								{
+									"key": "document",
+									"value": "12345678909"
+								}
+							]
+						},
+						"description": "Returns a customer"
+					},
+					"response": []
+				},
+				{
+					"name": "List all addresses of a customer",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{apiUri}}/customers/:document/addresses",
+							"host": [
+								"{{apiUri}}"
+							],
+							"path": [
+								"customers",
+								":document",
+								"addresses"
+							],
+							"variable": [
+								{
+									"key": "document",
+									"value": "{{document}}"
+								}
+							]
+						},
+						"description": "Returns all address of a customer"
+					},
+					"response": []
+				},
+				{
+					"name": "Update address of a customer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\": \"Rua José dos Reis\",\n    \"number\": 100,\n    \"complement\": \"apto 2\",\n    \"county\": \"Vila Prudente\",\n    \"city\": \"São Paulo\",\n    \"state\": \"SP\",\n    \"zipCode\": \"03139040\"\n}"
+						},
+						"url": {
+							"raw": "{{apiUri}}/customers/:document/addresses/:addressId",
+							"host": [
+								"{{apiUri}}"
+							],
+							"path": [
+								"customers",
+								":document",
+								"addresses",
+								":addressId"
+							],
+							"variable": [
+								{
+									"key": "document",
+									"value": "12345678909"
+								},
+								{
+									"key": "addressId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Folder for customers"
+		},
+		{
+			"name": "address",
+			"item": [
+				{
+					"name": "Find address",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUri}}/addresses/:zipcode",
+							"host": [
+								"{{apiUri}}"
+							],
+							"path": [
+								"addresses",
+								":zipcode"
+							],
+							"variable": [
+								{
+									"key": "zipcode",
+									"value": "01319010"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "domains",
+			"item": [
+				{
+					"name": "Get States",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUri}}/domains/states",
+							"host": [
+								"{{apiUri}}"
+							],
+							"path": [
+								"domains",
+								"states"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUri}}/domains/states/:stateId/cities",
+							"host": [
+								"{{apiUri}}"
+							],
+							"path": [
+								"domains",
+								"states",
+								":stateId",
+								"cities"
+							],
+							"variable": [
+								{
+									"key": "stateId",
+									"value": "35"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "07eba36b-b14f-40e5-bb5c-ada8896ea642",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "df740974-29cd-4ad7-987f-3c84b1ad0b9b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "3b94e910-5d3b-4f5c-9968-e1d684ef96c5",
+			"key": "apiUri",
+			"value": "http://localhost:8080/api",
+			"type": "string"
+		}
+	]
+}
