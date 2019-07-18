@@ -1,0 +1,105 @@
+swagger: "2.0"
+info:
+  description: "Domains Service API"
+  version: "1.0.0"
+  title: "Domains Service"
+  contact:
+    email: "fabioccunha@gmail.com"
+basePath: "/api"
+schemes:
+  - "http"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+paths:
+  /domains/states:
+    get:
+      tags:
+        - "states"
+      summary: "Find an address by zipcode"
+      description: "Returns an address"
+      operationId: "getStates"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/AddressResponse"
+        400:
+          description: "Invalid document"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        404:
+          description: "Customer not found"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: "Internal error"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /domains/states/{stateId}/cities:
+    get:
+      tags:
+        - "states"
+      summary: "List all cities from a state"
+      description: "Returns cities from a state"
+      operationId: "getCities"
+      parameters:
+        - name: "stateId"
+          in: "path"
+          description: "StateId to list cities"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/AddressResponse"
+        400:
+          description: "Invalid document"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        404:
+          description: "Customer not found"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: "Internal error"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+definitions:
+  AddressResponse:
+    type: "object"
+    properties:
+      address:
+        type: "string"
+        example: "Av. Paulista"
+      county:
+        type: "string"
+        example: "Jardins"
+      city:
+        type: "string"
+        example: "São Paulo"
+      state:
+        type: "string"
+        example: "SP"
+      zipcode:
+        type: "string"
+        example: "01111000"
+
+  ErrorResponse:
+    required:
+      - errors
+    properties:
+      errors:
+        type: array
+        items:
+          type: object
+          properties:
+            code:
+              type: "integer"
+              format: "int64"
+            message:
+              type: "string"
+              example: "Error message"
