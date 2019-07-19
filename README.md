@@ -13,4 +13,4 @@ mvn spring-boot:run
 
 ### Postman Collection
 
-https://github.com/cocamm/customer-service/blob/master/swagger/PAN_postman_collection.json
+https://github.com/cocamm/customer/blob/master/PAN_postman_collection.json
