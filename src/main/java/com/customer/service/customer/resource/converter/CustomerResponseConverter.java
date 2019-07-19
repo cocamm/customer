@@ -4,7 +4,10 @@ import com.customer.service.customer.model.Customer;
 import com.customer.service.customer.resource.model.AddressResponse;
 import com.customer.service.customer.resource.model.CustomerResponse;
 
+import java.util.Collections;
 import java.util.stream.Collectors;
+
+import static java.util.Optional.ofNullable;
 
 public class CustomerResponseConverter {
 
@@ -14,7 +17,9 @@ public class CustomerResponseConverter {
                 .document(customer.getDocument())
                 .birthDate(customer.getBirthDate())
                 .name(customer.getName())
-                .addresses(customer.getAddresses().stream()
+                .addresses(ofNullable(customer.getAddresses())
+                        .orElse(Collections.emptyList())
+                        .stream()
                         .map(address -> AddressResponse.builder()
                                 .addressId(address.getId())
                                 .zipCode(address.getZipCode())
